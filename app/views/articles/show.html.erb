@@ -1,0 +1,65 @@
+<main class="container">
+  <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+    <div class="col-lg-6 px-0">
+      <h1 class="display-4 fst-italic"><%= @article.title %></h1>
+      <p class="blog-post-meta"><%= @article.created_at.strftime("%B %e, %Y") %> by <%=link_to @article.user.email, user_path(@article.user_id)%></p>
+      <p class="lead my-3"><%= @article.body %></p>
+    </div>
+    <div class="other d-flex align-items-center justify-content-between">
+      <div class="left-elements d-flex">
+        <div class="like">
+          <% if user_signed_in? %>
+            <% pre_like = @article.likes.find{|like| like.user_id == current_user.id } %>
+            <% if pre_like %>
+              <%= button_to article_like_path(@article, pre_like), method: :delete,
+              style:"color: blue;
+              background-color: transparent !important;
+              border: none;
+              padding: 0; " do %>
+                <i class="fa-regular fa-thumbs-up"></i>
+                <i style="color: white"><%= @article.likes.count %></i>
+              <% end %>
+            <% else %>
+              <%= button_to article_likes_path(@article), data: { turbo_method: :post},
+              style:"color: white;
+              background-color: transparent !important;
+              border: none;
+              padding: 0; " do %>
+                <i class="fa-regular fa-thumbs-up"></i>
+                <i style="color: white"><%= @article.likes.count %></i>
+              <% end %>
+            <% end %>
+            <%else%>
+              <i class="fa-regular fa-thumbs-up"></i>
+              <i style="color: white"><%= @article.likes.count %></i>
+          <% end %>
+        </div>
+        <div class="comment mx-2">
+          <i class="far fa-comment"></i>
+          <i style="color: white"><%= @article.comments.count %></i>
+        </div>
+      </div>
+      <% if user_signed_in? && current_user == @article.user%>
+      <div class="button">
+        <%= link_to "Edit", edit_article_path(@article), class:"btn btn-outline-success" %>
+        <%= link_to "Destroy", article_path(@article),
+                data: { turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                    },
+                     class: "btn btn-outline-danger" %>
+                    
+      </div>
+      <% end %>
+    </div>
+    <hr>
+    <div class="comment_board">
+      <%= render @article.comments %>
+      <% if user_signed_in? %>
+        <%= render "comments/form" %>
+      <% end %>
+    </div>
+    <%= link_to sanitize("< Back"), root_path %>
+  </div>
+</main>
+
+

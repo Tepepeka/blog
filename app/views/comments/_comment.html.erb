@@ -1,0 +1,13 @@
+<p>
+  <%= comment.body %>
+  <% if user_signed_in? && current_user == comment.user%>
+  <%= link_to "", [comment.article, comment],
+      data: { turbo_method: :delete,
+              turbo_confirm: "Are you sure?"
+            },
+            class:"fas fa-trash mx-2",
+            style:"text-decortion:none;
+                   color:red;"
+  %>
+  <% end %>
+</p>

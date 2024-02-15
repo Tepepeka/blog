@@ -1,0 +1,12 @@
+<!-- app/views/admin/dashboard.html.erb -->
+<h1>Administration Dashboard</h1>
+
+<h2>Articles</h2>
+<% @articles.each do |article| %>
+  <p><%= article.title %> - <%= article.body %></p>
+<% end %>
+
+<h2>Users</h2>
+<% @users.each do |user| %>
+  <p><%= user.email %></p>
+<% end %>

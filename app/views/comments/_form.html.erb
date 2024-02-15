@@ -1,0 +1,9 @@
+<%= form_with model: [ @article, @article.comments.build ] do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_area :body, class: "form-control", id: "floatingTextarea", placeholder: "Leave a comment here" %>
+    <label for="floatingTextarea">Your Comment</label>
+  </div>
+    <div class="mb-3">
+    <%= form.submit "Submit Comment", class: "btn btn-outline-primary" %>
+  </div>
+<% end %>

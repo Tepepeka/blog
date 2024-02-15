@@ -1,0 +1,19 @@
+<% if user_signed_in? %>
+  <% pre_like = @article.likes.find{|like| like.user_id == current_user.id } %>
+  <% if pre_like %>
+    <%= button_to article_like_path(@article, pre_like), method: :delete, style:"color: blue; background-color: transparent !important;border: none;padding: 0" do %>
+      <i class="fa-regular fa-thumbs-up"></i> 
+      <i style="color: black"><%= @article.likes.count %></i>
+    <% end %>
+
+  <% else %>
+    <%= button_to article_likes_path(@article), data: {turbo_method: :post}, style:"color: grey; background-color: transparent !important;border: none;padding: 0" do %>
+      <i class="fa-regular fa-thumbs-up"></i>
+      <i style="color: black"><%= @article.likes.count %></i>
+    <% end %>
+
+  <% end %>
+<% else %>
+  <i class="fa-regular fa-thumbs-up", style="color: black; background-color: transparent !important;border: none;padding: 0"></i>
+  <i style="color: black"><%= @article.likes.count %></i>
+<% end %>
